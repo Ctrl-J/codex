@@ -1,0 +1,24 @@
+cmake_minimum_required(VERSION 2.8)
+
+set (ENGINE_COMMON_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set (ENGINE_COMMON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include
+  CACHE INTERNAL "Renderer: Include Directories" FORCE)
+
+include_directories(${ENGINE_COMMON_INCLUDE_DIR})
+
+set(ENGINE_COMMON_SOURCE_FILES
+  ${ENGINE_COMMON_SOURCE_DIR}/i_renderer.cc
+  ${ENGINE_COMMON_SOURCE_DIR}/i_configuration.cc
+)
+
+set(ENGINE_COMMON_INCLUDE_FILES
+  ${ENGINE_COMMON_INCLUDE_DIR}/engine_common.h
+  ${ENGINE_COMMON_INCLUDE_DIR}/i_renderer.h
+  ${ENGINE_COMMON_INCLUDE_DIR}/i_configuration.h
+)
+
+add_library(
+  EngineCommon
+  ${ENGINE_COMMON_SOURCE_FILES}
+  ${ENGINE_COMMON_INCLUDE_FILES}
+)

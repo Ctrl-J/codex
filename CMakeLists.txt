@@ -1,0 +1,44 @@
+cmake_minimum_required(VERSION 3.0.2)
+
+set(CMAKE_DEBUG_POSTFIX "_d")
+
+# First for the generic no-config case (e.g. with mingw)
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib )
+set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib )
+
+# Second, for multi-config builds (e.g. msvc)
+foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
+    string( TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG )
+    set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_CURRENT_SOURCE_DIR}/bin )
+    set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_CURRENT_SOURCE_DIR}/lib )
+    set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_CURRENT_SOURCE_DIR}/lib )
+endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
+
+set(PROJECT_NAME codex)
+project(${PROJECT_NAME})
+
+set (CODEX_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set (CODEX_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include
+  CACHE INTERNAL "Codex: Include Directories" FORCE)
+
+add_subdirectory(common)
+add_subdirectory(vulkan_renderer)
+
+include_directories(${CODEX_INCLUDE_DIR})
+
+set(CODEX_SOURCE_FILES
+  ${CODEX_SOURCE_DIR}/codex.cc
+  ${CODEX_SOURCE_DIR}/window_manager.cc
+)
+
+set(CODEX_INCLUDE_FILES
+  ${CODEX_INCLUDE_DIR}/codex.h
+  ${CODEX_INCLUDE_DIR}/window_manager.h
+)
+
+add_library(
+  ${PROJECT_NAME}
+  ${CODEX_SOURCE_FILES}
+  ${CODEX_INCLUDE_FILES}
+)
