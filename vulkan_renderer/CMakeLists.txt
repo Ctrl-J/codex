@@ -21,11 +21,11 @@ else()
 endif()
 
 set(VULKAN_RENDERER_SOURCE_FILES
-  ${VULKAN_RENDERER_SOURCE_DIR}/vulkan_renderer.cc
+  ${VULKAN_RENDERER_SOURCE_DIR}/vulkan_renderer_impl.cc
 )
 
 set(VULKAN_RENDERER_INCLUDE_FILES
-  ${VULKAN_RENDERER_INCLUDE_DIR}/vulkan_renderer.h
+  ${VULKAN_RENDERER_INCLUDE_DIR}/vulkan_renderer_impl.h
 )
 
 add_library(
